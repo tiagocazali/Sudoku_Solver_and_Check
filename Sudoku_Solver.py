@@ -1,18 +1,5 @@
-a = [
-    [3, 1, 0, 4, 8, 0, 9, 2, 5],
-    [5, 6, 0, 0, 0, 0, 0, 0, 7],
-    [2, 4, 0, 7, 3, 5, 6, 8, 0],
-    [8, 0, 0, 0, 0, 0, 0, 0, 9],
-    [7, 0, 2, 8, 6, 0, 0, 0, 0],
-    [0, 0, 4, 0, 5, 1, 2, 0, 0],
-    [0, 0, 0, 0, 7, 8, 0, 9, 4],
-    [4, 0, 0, 0, 0, 0, 8, 1, 0],
-    [0, 0, 5, 1, 0, 0, 0, 0, 0]
-]
-
-
 def print_board(board):
-    """Print the Board in Sudoku Format"""
+    """ Print the Board in Sudoku Format """
 
     for row in range(9):
         if row % 3 == 0 and row != 0:
@@ -30,7 +17,7 @@ def print_board(board):
         
 
 def find_empty_place(board):
-    """Return the first empty place in the board - (Row, Col)"""
+    """ Return the first empty place in the board - (Row, Col)"""
 
     for row in range(9):
         for col in range(9):
@@ -42,19 +29,20 @@ def find_empty_place(board):
 
 def is_valid_movement(board, number, position):
     """ Check if the giving number can be add to the position"""
-    print(f"TESTE {number} em {position}")
+
+    print(f"TESTE {number} em {position}") # This Line is just to follow the process in console. It can be deactivated. 
     row, col = position
 
     #check the Row
     for i in range(9):
         if board[row][i] == number and col != i:
-            print('Row Error')
+            print('Row Error') # This Line is just to follow the process in console. It can be deactivated. 
             return False
         
     #check the Colum
     for i in range(9):
         if board[i][col] == number and row != i:
-            print("Colum error")
+            print("Colum error") # This Line is just to follow the process in console. It can be deactivated. 
             return False
     
     #check the quadrant:
@@ -64,14 +52,15 @@ def is_valid_movement(board, number, position):
     for i in range(box_x*3, box_x*3+3):
         for j in range(box_y*3, box_y*3+3):
             if board[i][j] == number:
-                print("Box Error")
+                print("Box Error") # This Line is just to follow the process in console. It can be deactivated. 
                 return False
 
-
+    # If all the validations worked, so It's a valid movement. 
     return True
     
 
 def solve_sudoku(board):
+    """ Solve the SUDOKU using Backtracking algorithm """
 
     # 1) Find the next place to fill
     place = find_empty_place(board)
@@ -90,7 +79,7 @@ def solve_sudoku(board):
         
         # 3) Fill this place with the first available option
         if is_valid_movement(board, i, place):
-            print(f"Add {i} in position {place}")
+            print(f"Add {i} in position {place}") # This Line is just to follow the process in console. It can be deactivated. 
             board[row][col] = i
 
             # 4) Than do all the process again
@@ -101,7 +90,7 @@ def solve_sudoku(board):
             
             # 5) But if the next movement is impossible, set the place to ZERO, and continue to check other numbers
                 # Here is the Backtrack! You tried to solve but there are no options, so go back one position e try other number
-            print(f"SEM solução. Voltando 0 para {row,col}")
+            print(f"SEM solução. Voltando 0 para {row,col}") # This Line is just to follow the process in console. It can be deactivated. 
             board[row][col] = 0
     
     # 6) If you tired all 9 number for that position  
@@ -110,7 +99,19 @@ def solve_sudoku(board):
     return False
 
 
+#======== TEST ===========
 
+a = [
+    [3, 1, 0, 4, 8, 0, 9, 2, 5],
+    [5, 6, 0, 0, 0, 0, 0, 0, 7],
+    [2, 4, 0, 7, 3, 5, 6, 8, 0],
+    [8, 0, 0, 0, 0, 0, 0, 0, 9],
+    [7, 0, 2, 8, 6, 0, 0, 0, 0],
+    [0, 0, 4, 0, 5, 1, 2, 0, 0],
+    [0, 0, 0, 0, 7, 8, 0, 9, 4],
+    [4, 0, 0, 0, 0, 0, 8, 1, 0],
+    [0, 0, 5, 1, 0, 0, 0, 0, 0]
+]
          
 print_board(a)
 solve_sudoku(a)
